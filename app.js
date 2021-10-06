@@ -28,10 +28,17 @@ app.get ('/', (req, res) => {
 
 app.post ('/', (req,res) => {
   const originURL = req.body.url
-  const shortURL = `http://localhost:${port}/${generateURL()}`
+  const shortURL = `http://localhost:3000/${generateURL()}`
   return UrlModel.create( {originURL, shortURL} )
     .then(() => res.render('index', { originURL, shortURL}))
     .catch (err => console.log (err))
+})
+
+app.get('/:id', (req,res) => {
+  const id = req.params.id
+  UrlModel.find ({shortURL:`http://localhost:3000/${id}`})
+          .then ((url)=> {res.redirect(`${url[0].originURL}`)})
+          .catch ((err) => {console.log (err)})
 })
 
 app.listen (port, () => {
