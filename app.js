@@ -11,6 +11,7 @@ require('./config/mongoose')
 app.engine ('hbs', exphbs ({extname:'hbs', defaultLayout:"main"}))
 app.set ('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static("public"))
 
 function generateURL () {
   let newURL = ''
@@ -29,9 +30,18 @@ app.get ('/', (req, res) => {
 app.post ('/', (req,res) => {
   const originURL = req.body.url
   const shortURL = `http://localhost:3000/${generateURL()}`
-  return UrlModel.create( {originURL, shortURL} )
-    .then(() => res.render('index', { originURL, shortURL}))
-    .catch (err => console.log (err))
+  return UrlModel.find ({originURL: originURL})
+            .lean()
+            .then((url) => { 
+              if (url.length === 1) {
+                res.render ('index', {shortURL:url[0].shortURL})
+              } else if (url.length === 0){
+                UrlModel.create ({originURL,shortURL})
+                .then (() => res.render ('index', {shortURL}) )
+                .catch (err => console.log (err))
+                   }
+                  })
+            .catch ((err) => {console.log (err)})
 })
 
 app.get('/:id', (req,res) => {
