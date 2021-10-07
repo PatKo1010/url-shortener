@@ -12,9 +12,9 @@
   {{#if shortURL}}
   <div>
     <h2>Success! Please use this link:</h2>
-    <a href={{shortURL}} target="blank" class = "d-block mb-2" style = "font-size:25px">{{shortURL}}</a>
-    <button class= "btn btn-primary d-block mx-auto mt-3" style= "width:30%; height:40px">Copy</button>
-    <a class= "btn btn-primary d-block mx-auto mt-3" style= "width:30%; height:40px" href="/">Back</a>
+    <a href={{shortURL}} target="blank" id = "copy" class = "d-block mb-2" style = "font-size:25px">{{shortURL}}</a>
+    <button  type ="button" class= "btn btn-primary d-block mx-auto mt-3" onclick = "copyEvent('copy')" style= "width:30%; height:40px">Copy</button>
+    <a  class= "btn btn-primary d-block mx-auto mt-3" style= "width:30%; height:40px" href="/">Back</a>
   </div>
   
 
