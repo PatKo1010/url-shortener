@@ -10,8 +10,6 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const originURL = req.body.url
-
-  console.log (process.env.)
   const shortURL =`http://localhost:3000/${generateURL()}`
 
   return UrlModel.find({ originURL: originURL })
